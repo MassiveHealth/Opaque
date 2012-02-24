@@ -134,8 +134,6 @@
 {
     [super layoutSublayers];
 
-    // Convert the height percentage into a nice sinusoidal position so everything lines up nicely
-    CGFloat f = 1.0 - asinf( self.bounds.size.height / self.fullHeight ) / M_PI_2;
     CGSize size = self.bounds.size;   
     
     // Configure the layer bounds and midpoints
@@ -150,6 +148,7 @@
     // If these layers had contents (images, etc) we would want to have an additional transparent 
     // layer with alpha that darkened everything instead of mutating the color.
     CGFloat h,s,b,a;
+    CGFloat f = 1 - self.bounds.size.height / self.fullHeight;    
     [self.color getHue:&h saturation:&s brightness:&b alpha:&a];    
     CGFloat tb = b * ( 1 - f * 0.35 ); // scale from 100% - 65% brightness
     CGFloat bb = b * ( 1 - f * 0.15 ); // scale from 100% - 85% brightness
@@ -172,10 +171,12 @@
     // All three transition styles share the same exact math. The only difference is if we
     // reflect the top or bottom angle to create a plane on the top, plane on the bottom, 
     // or two planes intersecting each other. 
-    CGFloat angle = f * M_PI_2; 
-    CGFloat dz = - 0.5 * self.fullHeight * sinf(angle);
-    CGFloat topAngle = angle;
-    CGFloat bottomAngle = angle;
+    CGFloat l = 0.5 * self.fullHeight;
+    CGFloat y = 0.5 * self.bounds.size.height;
+    CGFloat theta = acosf(y/l);
+    CGFloat z = l * sinf(theta);    
+    CGFloat topAngle = theta;
+    CGFloat bottomAngle = theta;
     
     if ( self.layerStyle == MHLayerStylePinch )
     {
@@ -187,7 +188,7 @@
         bottomAngle *= -1;
     }
     
-    CATransform3D transform = CATransform3DMakeTranslation(0.0, 0.0, dz);
+    CATransform3D transform = CATransform3DMakeTranslation(0.0, 0.0, -z);
     self.topHalfLayer.transform = CATransform3DRotate(transform, topAngle, 1.0, 0.0, 0.0);
     self.bottomHalfLayer.transform = CATransform3DRotate(transform, bottomAngle, 1.0, 0.0, 0.0);
 }
