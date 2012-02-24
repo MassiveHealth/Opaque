@@ -1,0 +1,79 @@
+Opaque
+=======
+
+Nearly everyone we know has been extremely excited to see [Realmac Software][]'s beautiful new todo-list app [Clear][] hit the App Store. Thoughtfully deconstructed UI, intuitive gestures, and beautiful animations make for a wonderful product that surprises and delights users.
+
+Being a fan of rich user experiences, we spent a day building a quick prototype of Clear's primary user interaction:
+
+- Multi-gesture recognition
+- Pull down to create
+- Pinch open to reveal a cell
+- Pinch closed to close a cell
+- Animated folding & flipping cells
+
+It looks a little something like this:
+
+![](/Users/michael/Desktop/Opaque/Screen.png)
+
+How did you do that?
+--------------------
+--------------------
+
+Glad you asked! The mechanics behind this are relatively simple. Start with Core Animation layers, sprinkle in basic trig, stir in some gesture recognizers, bake for 30 minutes at 450&deg; and you're done!
+
+Before implementing anything in Core Animation, especially anything in three dimensions, you should draw it out on paper from the front and the side. The Clear app has four different cell states in the todo list which I've named flat ( | ), fold back ( &#92; ), pinch ( < ), and fold up ( / ). At first you might think we need to implement some sort of CAFlatLayer, CAPinchLayer, and CAFoldLayer but these can all be very cleanly abstracted into four different states of the same class. In fact, it turns out they can all use the exact same three lines of code:
+
+	CATransform3D transform = CATransform3DMakeTranslation(0.0, 0.0, dz);
+	self.topHalfLayer.transform = CATransform3DRotate(transform, topAngle, 1.0, 0.0, 0.0);
+	self.bottomHalfLayer.transform = CATransform3DRotate(transform, bottomAngle, 1.0, 0.0, 0.0);
+
+Four different sexy animations in three lines of code. I told you the mechanics were simple! Each state is just a matter of how far back we push the anchor point and the angle we need to rotate our layers towards or away from the user. Let's walk through how this works. 
+
+Our folding layer is composed of two sublayers, topHalfLayer & bottomHalfLayer, both of which contain appropriately positioned and clipped copies of our text layer.
+
+XXXXX ARTWORK SHOWING TWO LAYERS
+
+In order to make the 3D projections line up properly and dramatically simplify the math, we change the anchor points of the layers to align with the center of our parent folding layer. For those of you following along at home, that's (0.5, 1) for the top layer and (0.5,0) for the bottom layer. If we don't transform anything we already have the flat layer.
+
+![](/Users/michael/Desktop/Opaque/Anchor.png)
+
+1 down, 3 to go. As we shrink the height of our layer, we need to rotate the layers back by the appropriate ø so they still fit. You might be tempted to just skip the 3D and squish them trust us, that approach will only end in tears. To get the pinch effect we rotate the front and back layers by the appropriate ø and -ø so the layer halves stay the same height. This puts the layers in front of the screen so we need to translate the layers back by dz = &#189; h * sin(ø) where h is the original height of the flat layer. That's 2 down. If we want to fold instead of pinch, translate the layers back by dz and rotate both layers by ø or -ø and they will like up. As you can see above, that's just 1 CATransform3DMakeTranslation and 1 CATransform3DRotate per layer half and we're done. For a better view of each state:
+
+![](/Users/michael/Desktop/Opaque/Layers.png)
+
+What about pinching and stuff?
+------------------------------
+------------------------------
+
+The use of intuitive and contextually appropriate gestures are what make Clear really shine. Gesture management in the past was done through intercepting touch events and doing your best to figure out what they are. These days we get to use UIGestureRecognizers which make things a lot easier. Specifically, we need a UIPinchGestureRecognizer and a UIPanGestureRecognizer. We'll first need a view to capture the gestures. This example uses a full screen UIScrollView for bouncing and scrolling large lists and adds a bunch of our folding layers as subviews to the scrollview's layer. Add those gesture recognizers to the scroll view, not the individual layers. Next up you create a new layer when a gesture begins, adjust the size of your layer when the gesture changes, and finalize/delete the layer when the gesture has ended. At the end of each gesture change state we relayout our layer frames. Thanks to Core Animation our layers will animate between states for you automatically.
+
+Want to learn more? The nitty-gritty is all in the code. There's a bit more about how we interpolate colors, how we track the gestures, how we selectively allow certain animations at specific times, and how we create and clean up layers. All told this is a couple hundred lines of code so it should be a fairly quick read.
+
+Give me the code!
+-----------------
+-----------------
+
+Want to do something like this in your project? Want to contribute? The source is hosted over here on [github][].
+
+We explicitly left out some details to make things more clear, as this is just an example. Pinching to create just uses the pinch.scale but the layers above and below the new layer should track the users two fingers. We could be using custom UIViews backed by custom CALayers but we are manually managing CALayers. We could support arbitrary view hierarchies and avoid this two-text-field trick by rendering the cell/view hierarchy into a CGImage and setting that as the top/bottom layer.contents and adjusting appropriately with the right contentsRect. We could create a MHFoldingTableView with a datasource and delegate and move our layer/cell layout into that view instead of the gesture recognizer. 
+
+We could show how to do more Clear-like things: side swiping to mark completed, make layers editable, pinch-down to shrink the list into a single cell in a larger list, add sounds, add themes, and more - but again this was meant as an example to illustrate some CoreAnimation & UIGestureRecognizer basics.
+
+Have other ideas? Improvements? Fork Opaque on [github][] and submit a pull request. 
+
+Interested in building awesome software to save lives and change the world for the better? So are we, and we're hiring! Head over to our [Jobs page][] and send us your resume.
+
+Please send thoughts, feedback, improvements, ideas, hatemail, poems, and suggestions to [michael@massivehealth.com][] and you can find me at @yipe.
+
+Disclaimer
+----------
+----------
+
+[Massive Health][] is not affiliated in any way with Realmac Software. This software is provided "as is" to the community and you are free to use this however you like. We hope you take some of these ideas and build innovative new products with it!
+
+[Massive Health]: http://www.massivehealth.com
+[Realmac Software]: http://www.realmacsoftware.com/
+[Clear]: http://www.realmacsoftware.com/clear/
+[michael@massivehealth.com]: mailto:michael@massivehealth.com
+[github]: http://www.github.com/MassiveHealth/Opaque
+[Jobs page]: http://massivehealth.com/jobs-front-end

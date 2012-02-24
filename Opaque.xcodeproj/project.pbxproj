@@ -1,0 +1,289 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4C93F4B114F45C52009B1853 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C93F4B014F45C52009B1853 /* UIKit.framework */; };
+		4C93F4B314F45C52009B1853 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C93F4B214F45C52009B1853 /* Foundation.framework */; };
+		4C93F4B514F45C52009B1853 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C93F4B414F45C52009B1853 /* CoreGraphics.framework */; };
+		4C93F4BB14F45C52009B1853 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C93F4B914F45C52009B1853 /* InfoPlist.strings */; };
+		4C93F4BD14F45C52009B1853 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C93F4BC14F45C52009B1853 /* main.m */; };
+		4C93F4C114F45C52009B1853 /* MHAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C93F4C014F45C52009B1853 /* MHAppDelegate.m */; };
+		4C93F4D114F45C74009B1853 /* MHPaperFoldViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C93F4CE14F45C73009B1853 /* MHPaperFoldViewController.m */; };
+		4C93F4D214F45C74009B1853 /* MHFoldingLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C93F4D014F45C74009B1853 /* MHFoldingLayer.m */; };
+		4C93F4D414F45CBC009B1853 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C93F4D314F45CBC009B1853 /* QuartzCore.framework */; };
+		4C93F50214F475BF009B1853 /* MassiveHealth@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C93F50114F475BF009B1853 /* MassiveHealth@2x.png */; };
+		4C93F50414F475F5009B1853 /* MassiveHealth.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C93F50314F475F5009B1853 /* MassiveHealth.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4C93F4AC14F45C52009B1853 /* Opaque.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Opaque.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C93F4B014F45C52009B1853 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		4C93F4B214F45C52009B1853 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		4C93F4B414F45C52009B1853 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		4C93F4B814F45C52009B1853 /* Opaque-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Opaque-Info.plist"; sourceTree = "<group>"; };
+		4C93F4BA14F45C52009B1853 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		4C93F4BC14F45C52009B1853 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4C93F4BE14F45C52009B1853 /* Opaque-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Opaque-Prefix.pch"; sourceTree = "<group>"; };
+		4C93F4BF14F45C52009B1853 /* MHAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MHAppDelegate.h; sourceTree = "<group>"; };
+		4C93F4C014F45C52009B1853 /* MHAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MHAppDelegate.m; sourceTree = "<group>"; };
+		4C93F4CD14F45C73009B1853 /* MHPaperFoldViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHPaperFoldViewController.h; sourceTree = "<group>"; };
+		4C93F4CE14F45C73009B1853 /* MHPaperFoldViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHPaperFoldViewController.m; sourceTree = "<group>"; };
+		4C93F4CF14F45C73009B1853 /* MHFoldingLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHFoldingLayer.h; sourceTree = "<group>"; };
+		4C93F4D014F45C74009B1853 /* MHFoldingLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHFoldingLayer.m; sourceTree = "<group>"; };
+		4C93F4D314F45CBC009B1853 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		4C93F50114F475BF009B1853 /* MassiveHealth@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "MassiveHealth@2x.png"; path = "../MassiveHealth@2x.png"; sourceTree = "<group>"; };
+		4C93F50314F475F5009B1853 /* MassiveHealth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MassiveHealth.png; path = ../MassiveHealth.png; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4C93F4A914F45C52009B1853 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C93F4D414F45CBC009B1853 /* QuartzCore.framework in Frameworks */,
+				4C93F4B114F45C52009B1853 /* UIKit.framework in Frameworks */,
+				4C93F4B314F45C52009B1853 /* Foundation.framework in Frameworks */,
+				4C93F4B514F45C52009B1853 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4C93F4A114F45C52009B1853 = {
+			isa = PBXGroup;
+			children = (
+				4C93F4B614F45C52009B1853 /* Opaque */,
+				4C93F4AF14F45C52009B1853 /* Frameworks */,
+				4C93F4AD14F45C52009B1853 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4C93F4AD14F45C52009B1853 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4C93F4AC14F45C52009B1853 /* Opaque.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4C93F4AF14F45C52009B1853 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4C93F4D314F45CBC009B1853 /* QuartzCore.framework */,
+				4C93F4B014F45C52009B1853 /* UIKit.framework */,
+				4C93F4B214F45C52009B1853 /* Foundation.framework */,
+				4C93F4B414F45C52009B1853 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4C93F4B614F45C52009B1853 /* Opaque */ = {
+			isa = PBXGroup;
+			children = (
+				4C93F4BF14F45C52009B1853 /* MHAppDelegate.h */,
+				4C93F4C014F45C52009B1853 /* MHAppDelegate.m */,
+				4C93F4CD14F45C73009B1853 /* MHPaperFoldViewController.h */,
+				4C93F4CE14F45C73009B1853 /* MHPaperFoldViewController.m */,
+				4C93F4CF14F45C73009B1853 /* MHFoldingLayer.h */,
+				4C93F4D014F45C74009B1853 /* MHFoldingLayer.m */,
+				4C93F4B714F45C52009B1853 /* Supporting Files */,
+			);
+			path = Opaque;
+			sourceTree = "<group>";
+		};
+		4C93F4B714F45C52009B1853 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4C93F50314F475F5009B1853 /* MassiveHealth.png */,
+				4C93F50114F475BF009B1853 /* MassiveHealth@2x.png */,
+				4C93F4B814F45C52009B1853 /* Opaque-Info.plist */,
+				4C93F4B914F45C52009B1853 /* InfoPlist.strings */,
+				4C93F4BC14F45C52009B1853 /* main.m */,
+				4C93F4BE14F45C52009B1853 /* Opaque-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4C93F4AB14F45C52009B1853 /* Opaque */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4C93F4CA14F45C52009B1853 /* Build configuration list for PBXNativeTarget "Opaque" */;
+			buildPhases = (
+				4C93F4A814F45C52009B1853 /* Sources */,
+				4C93F4A914F45C52009B1853 /* Frameworks */,
+				4C93F4AA14F45C52009B1853 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Opaque;
+			productName = Opaque;
+			productReference = 4C93F4AC14F45C52009B1853 /* Opaque.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4C93F4A314F45C52009B1853 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "Massive Health";
+			};
+			buildConfigurationList = 4C93F4A614F45C52009B1853 /* Build configuration list for PBXProject "Opaque" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 4C93F4A114F45C52009B1853;
+			productRefGroup = 4C93F4AD14F45C52009B1853 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4C93F4AB14F45C52009B1853 /* Opaque */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4C93F4AA14F45C52009B1853 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C93F4BB14F45C52009B1853 /* InfoPlist.strings in Resources */,
+				4C93F50214F475BF009B1853 /* MassiveHealth@2x.png in Resources */,
+				4C93F50414F475F5009B1853 /* MassiveHealth.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4C93F4A814F45C52009B1853 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C93F4BD14F45C52009B1853 /* main.m in Sources */,
+				4C93F4C114F45C52009B1853 /* MHAppDelegate.m in Sources */,
+				4C93F4D114F45C74009B1853 /* MHPaperFoldViewController.m in Sources */,
+				4C93F4D214F45C74009B1853 /* MHFoldingLayer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		4C93F4B914F45C52009B1853 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C93F4BA14F45C52009B1853 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4C93F4C814F45C52009B1853 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		4C93F4C914F45C52009B1853 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4C93F4CB14F45C52009B1853 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Opaque/Opaque-Prefix.pch";
+				INFOPLIST_FILE = "Opaque/Opaque-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		4C93F4CC14F45C52009B1853 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Opaque/Opaque-Prefix.pch";
+				INFOPLIST_FILE = "Opaque/Opaque-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4C93F4A614F45C52009B1853 /* Build configuration list for PBXProject "Opaque" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4C93F4C814F45C52009B1853 /* Debug */,
+				4C93F4C914F45C52009B1853 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4C93F4CA14F45C52009B1853 /* Build configuration list for PBXNativeTarget "Opaque" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4C93F4CB14F45C52009B1853 /* Debug */,
+				4C93F4CC14F45C52009B1853 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4C93F4A314F45C52009B1853 /* Project object */;
+}
