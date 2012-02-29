@@ -1,7 +1,7 @@
 Opaque
 =======
 
-Everyone we know has been excited by [Realmac Software][]'s beautiful new todo-list app [Clear][] hit the App Store. Thoughtfully deconstructed UI, intuitive gestures, and beautiful animations make for a wonderful product that surprises and delights users.
+Everyone we know has been excited by [Realmac Software][]'s beautiful new todo-list app [Clear][] hit the App Store. Thoughtfully deconstructed UI, intuitive gestures, and beautiful animations make for a wonderful product that surprises and delights users. 
 
 Being a fan of rich user experiences, we spent a day building a quick prototype of Clear's primary user interaction:
 
@@ -22,7 +22,7 @@ Glad you asked! The mechanics behind this are relatively simple. Start with Core
 
 Before implementing anything in Core Animation, especially anything in three dimensions, you should draw it out on paper from the front and the side. The todo list in Clear has four different cell states which I've named fold back, pinch, fold up, and flat:
 
-![](/Users/michael/Desktop/Opaque/Sides.png)
+![](http://s3.amazonaws.com/massivehealth/Sides.png)
 
 At first you might think we need to implement some sort of CAFlatLayer, CAPinchLayer, and CAFoldLayer but these can all be very cleanly abstracted into four different states of the same class. In fact, it turns out they can all use the exact same two lines of trig & two simple transforms:
 
@@ -38,11 +38,11 @@ At first you might think we need to implement some sort of CAFlatLayer, CAPinchL
 
 Four different sexy animations in five lines of code. I told you the mechanics were simple! Each state is just a matter of how far back we push the anchor point [ z = h * sin(&theta;) ] and the angle we need to rotate our layers towards or away from the user [ &theta; = cos<sup>-1</sup>(y/h) where y = &#189; the current cell height and h = &#189; the original cell height]. Let's walk through how this works. Our folding layer is composed of two sublayers, both of which contain appropriately positioned and clipped copies of our text layer.
 
-![](/Users/michael/Desktop/Opaque/3D.png)
+![](http://s3.amazonaws.com/massivehealth/3D.png)
 
 In order to make the 3D projections line up properly and dramatically simplify the math, we change the anchor points of the layers to align with the center of our parent folding layer. For those of you following along at home, that's (0.5, 1) for the top layer and (0.5,0) for the bottom layer. If we don't transform anything we already have the flat layer.
 
-![](/Users/michael/Desktop/Opaque/Anchor.png)
+![](http://s3.amazonaws.com/massivehealth/Anchor.png)
 
 1 down, 3 to go. As we shrink the height of our layer, we need to rotate the layers forward by the appropriate &theta; so their edges touch the front plane. You might be tempted to just skip the 3D and squish them trust us, that approach will only end in tears. To get the pinch effect we rotate the top and bottom layers by the appropriate &theta; and -&theta; so the layer halves stay the same height. This puts the layers in front of the screen so we need to translate the layers back by z. That's 2 down. If we want to fold instead of pinch, translate the layers back by z and rotate both layers by &theta; or -&theta; and they will like up. As you can see above, that's just 1 CATransform3DMakeTranslation and 1 CATransform3DRotate per layer half and we're done.
 
@@ -72,10 +72,13 @@ Interested in building awesome software to save lives and change the world for t
 
 Please send thoughts, feedback, improvements, ideas, haikus, hatemail, and suggestions to [michael@massivehealth.com][] and you can find me at @yipe.
 
+Michael recently ran a leading mobile agency producing award-winning iOS apps and mobile strategy for Fortune 500 brands, built AppleTV's cinematic user experience, shipped beautiful apps for Apple's Mac OS team for 6 years, and traveled Southeast Asia for a year with two cameras and a large unkempt beard. He's excited to be back building products that matter.
+
 Disclaimer
 ----------
 
 [Massive Health][] is not affiliated in any way with Realmac Software. This software is provided "as is" to the community and you are free to use this however you like. We hope you take some of these ideas and build innovative new products with it!
+
 
 [Massive Health]: http://www.massivehealth.com
 [Realmac Software]: http://www.realmacsoftware.com/
