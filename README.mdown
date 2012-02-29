@@ -13,7 +13,7 @@ Being a fan of rich user experiences, we spent a day building a quick prototype 
 
 It looks a little something like this:
 
-![](/Users/michael/Desktop/Opaque/Opaque.png)
+![](http://s3.amazonaws.com/massivehealth/Opaque.png)
 
 How did you do that?
 --------------------
