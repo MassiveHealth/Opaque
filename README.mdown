@@ -1,88 +1,74 @@
 Opaque
 =======
 
-Everyone we know has been excited by [Realmac Software][]'s beautiful new todo-list app [Clear][] hit the App Store. Thoughtfully deconstructed UI, intuitive gestures, and beautiful animations make for a wonderful product that surprises and delights users. 
+[Clear][], a todo-list app by [Realmac Software][] recently took the tech and design community by storm with its sexy new take on no-button, gestural interfaces. For those who haven’t seen it, it’s worth watching their [intro video][]. It exudes class. We tip our collective [Massive Health][] hats to Clear’s great work.
 
-Being a fan of rich user experiences, we spent a day building a quick prototype of Clear's primary user interaction:
+In addition to the novelty of the gestural interface, Clear had an exceptional new visual metaphor for manipulating and adding todo items: simple paper-like folds. Being a fan of wonderful products that surprises and delights, we spent a day recreating some of Clear’s primary user interactions and wanted to share what we learned (and our code) with the wider community.
 
-- Multi-gesture recognition
-- Pull down to create
-- Pinch open to reveal a cell
-- Pinch closed to close a cell
-- Animated folding & flipping cells
+Please don’t take the code and just recreate Clear—that’s not nice—but do use the techniques as a source of inspiration for your next project.
 
-It looks a little something like this:
+We implemented a number of the interactions: pull to create, pinch-open to unfold a new todo, pinch-close to fold away a todo, and of course a way to do it all programmatically. It looks like this:
 
-![](http://s3.amazonaws.com/massivehealth/Opaque.png)
+![http://vimeo.com/37752521](http://s3.amazonaws.com/massivehealth/Opaque.png)
 
-How did you do that?
---------------------
+To recreate Clear’s effects, all it takes is some Core Animation layers, trigonometry, gesture recognition, and more trigonometry. Sitting comfortably? Here we go.
 
-Glad you asked! The mechanics behind this are relatively simple. Start with Core Animation layers, sprinkle in basic trig, stir in some gesture recognizers, bake for 30 minutes at 450&deg; and you're done!
+Clear has four different cell states which we’ve named fold back, pinch, fold up, and flat:
 
-Before implementing anything in Core Animation, especially anything in three dimensions, you should draw it out on paper from the front and the side. The todo list in Clear has four different cell states which I've named fold back, pinch, fold up, and flat:
+![](https://img.skitch.com/20120301-nydunqf23w4266xj1rt6gx2k7y.png)
 
-![](http://s3.amazonaws.com/massivehealth/Sides.png)
-
-At first you might think we need to implement some sort of CAFlatLayer, CAPinchLayer, and CAFoldLayer but these can all be very cleanly abstracted into four different states of the same class. In fact, it turns out they can all use the exact same two lines of trig & two simple transforms:
+All four of these states don’t need to be special cased in our code, although it may appear that way at first glace. If we lay the problem out correctly they can all be represented with the same five lines of code. We start by splitting the layer into two parts and defining two anchor points: at the bottom of the top half, and the top of the bottom half. Here’s the code (we’re taking advantage of Core Animation’s 3D transforms):
 
     CGFloat theta = acosf(y/l);
     CGFloat z = h * sinf(theta);    
 
-    …
+    /* ... */
     
-	CATransform3D transform = CATransform3DMakeTranslation(0.0, 0.0, z);
-	self.topHalfLayer.transform = CATransform3DRotate(transform, topAngle, 1.0, 0.0, 0.0);
-	self.bottomHalfLayer.transform = CATransform3DRotate(transform, bottomAngle, 1.0, 0.0, 0.0);
-    
+    CATransform3D transform = CATransform3DMakeTranslation(0.0, 0.0, z);
+    self.topHalfLayer.transform = CATransform3DRotate(transform, topAngle, 1.0, 0.0, 0.0);
+    self.bottomHalfLayer.transform = CATransform3DRotate(transform, bottomAngle, 1.0, 0.0, 0.0);
 
-Four different sexy animations in five lines of code. I told you the mechanics were simple! Each state is just a matter of how far back we push the anchor point [ z = h * sin(&theta;) ] and the angle we need to rotate our layers towards or away from the user [ &theta; = cos<sup>-1</sup>(y/h) where y = &#189; the current cell height and h = &#189; the original cell height]. Let's walk through how this works. Our folding layer is composed of two sublayers, both of which contain appropriately positioned and clipped copies of our text layer.
+What’s going on? Each state can be constructed by translating the top or bottom layer by its anchor point by [z=h*sin(θ)] and rotating by angle [θ=cos-1(y/h)] where y = ½ the current cell height and h = ½ the original cell height.
 
-![](http://s3.amazonaws.com/massivehealth/3D.png)
+![](https://img.skitch.com/20120301-x4sg844pycwpxxim53y2yw6a3s.png)
 
-In order to make the 3D projections line up properly and dramatically simplify the math, we change the anchor points of the layers to align with the center of our parent folding layer. For those of you following along at home, that's (0.5, 1) for the top layer and (0.5,0) for the bottom layer. If we don't transform anything we already have the flat layer.
+In order to make the 3D projections line up properly and dramatically simplify the math, we change the anchor points of the layers to align with the center of our parent folding layer. For those of you following along at home, that’s (0.5, 1) for the top layer and (0.5,0) for the bottom layer. If we don’t transform anything we already have the flat layer.
 
-![](http://s3.amazonaws.com/massivehealth/Anchor.png)
+One down, three to go.
 
-1 down, 3 to go. As we shrink the height of our layer, we need to rotate the layers forward by the appropriate &theta; so their edges touch the front plane. You might be tempted to just skip the 3D and squish them trust us, that approach will only end in tears. To get the pinch effect we rotate the top and bottom layers by the appropriate &theta; and -&theta; so the layer halves stay the same height. This puts the layers in front of the screen so we need to translate the layers back by z. That's 2 down. If we want to fold instead of pinch, translate the layers back by z and rotate both layers by &theta; or -&theta; and they will like up. As you can see above, that's just 1 CATransform3DMakeTranslation and 1 CATransform3DRotate per layer half and we're done.
-
+As we shrink the height of our layer, we need to rotate the layers forward by the appropriate θ so their edges touch the front plane. You might be tempted to just skip the 3D and use 2D transforms to fake the effect. Trust us, that approach will end in tears. To get the pinch effect we rotate the top and bottom layers by the appropriate θ and -θ so the layer halves stay the same height. This puts the layers in front of the screen so we need to translate the layers back by z. That’s 2 down. If we want to fold instead of pinch, translate the layers back by z and rotate both layers by θ or -θ and they will line up. As you can see above, that’s just one CATransform3DMakeTranslation and one CATransform3DRotate per layer half and we’re done.
 
 What about pinching and stuff?
 ------------------------------
 
-The use of intuitive and contextually appropriate gestures are what make Clear really shine. For gesture management in iOS5 we can use UIPinchGestureRecognizer & UIPanGestureRecognizer. This example uses a full screen UIScrollView for bouncing and scrolling large lists and adds a bunch of our folding layers directly to the scrollview's layer. The general idea behind the the UI is to create a new layer when a gesture begins, adjust the size of your layer when the gesture changes, and finalize/delete the layer when the gesture has ended. At the end of each gesture change state we relayout our layer frames. Thanks to Core Animation our layers will animate between states for you automatically.
+The use of contextually appropriate gestures are what make Clear really shine. For gesture management in iOS5 we can use UIPinchGestureRecognizer & UIPanGestureRecognizer. This example uses a full screen UIScrollView for bouncing and scrolling large lists and adds a bunch of our folding layers directly to the scrollview’s layer. The general idea behind the UI is to create a new layer when a gesture begins, adjust the size of your layer when the gesture changes, and finalize/delete the layer when the gesture has ended. At the end of each gesture change state we relayout our layer frames. Thanks to Core Animation our layers will animate between states for you automatically.
 
 Want more specifics? The nitty-gritty is all in the code.
+
 
 Give me the code!
 -----------------
 
-Want to do something like this in your project? Want to contribute? The source is hosted over here on [github][].
+Want to do something like this in your project? Want to contribute? The source is all right here. We call it Opaque. Feel free to fork it and make it your own or submit a pull request and improve this one.
 
-We explicitly left out some details to make things more clear, as this is just an example. If this were a production app, some obvious improvements would be:
+Read the source for a full understanding of how it works—this read me talks about the most important parts, but clearly doesn’t cover everything. The code is also just a prototype. If this were a production app, some obvious improvements would be:
 
-* Layers should track finger locations when pinching to create layers rather than using the pinch scale.
-* Use UIViews backed by custom CALayers instead of using raw layers in our view hierarchy.
-* Support arbitrary view hierarchies and avoid this two-text-field trick by rendering the cell contents into an image and using that as the layer contents while animating.
-* Create a MHFoldingTableView with a datasource and delegate and move our layer/cell layout into that view instead of the gesture recognizer.
+- Layers should track finger locations when pinching to create layers rather than using the pinch scale.
+- Use UIViews backed by custom CALayers instead of using raw layers in our view hierarchy.
+- Support arbitrary view hierarchies and avoid the two-text-field trick we used by rendering the cell contents into an image and using that as the layer contents while animating.
+- Create a MHFoldingTableView with a datasource and delegate and move our layer/cell layout into that view instead of the gesture recognizer.
+- Interested in building awesome software to save lives and change the world for the better? So are we, and we’re hiring! Head over to our [Jobs page][] and send us your resume.
 
-Have other ideas? Improvements? Fork Opaque on [github][] and submit a pull request.
+Please send thoughts, feedback, improvements, ideas, haikus, hatemail, and suggestions to [michael@massivehealth.com][] and you can find me on Twitter at [@yipe][]. [Massive Health][] is not affiliated in any way with Realmac Software. We hope you take some of these ideas and build innovative new products with it!
 
-Interested in building awesome software to save lives and change the world for the better? So are we, and we're hiring! Head over to our [Jobs page][] and send us your resume.
+A bit about the author: Michael recently ran a leading mobile agency producing award-winning iOS apps and mobile strategy for Fortune 500 brands. He also built AppleTV’s cinematic user experience, shipped beautiful apps for Apple’s Mac OS team for 6 years, and traveled Southeast Asia for a year with two cameras and a large unkempt beard. He’s excited to be back building products that matter.
 
-Please send thoughts, feedback, improvements, ideas, haikus, hatemail, and suggestions to [michael@massivehealth.com][] and you can find me at @yipe.
-
-Michael recently ran a leading mobile agency producing award-winning iOS apps and mobile strategy for Fortune 500 brands, built AppleTV's cinematic user experience, shipped beautiful apps for Apple's Mac OS team for 6 years, and traveled Southeast Asia for a year with two cameras and a large unkempt beard. He's excited to be back building products that matter.
-
-Disclaimer
-----------
-
-[Massive Health][] is not affiliated in any way with Realmac Software. This software is provided "as is" to the community and you are free to use this however you like. We hope you take some of these ideas and build innovative new products with it!
-
-
+[Jobs page]: http://massivehealth.com/jobs
 [Massive Health]: http://www.massivehealth.com
 [Realmac Software]: http://www.realmacsoftware.com/
 [Clear]: http://www.realmacsoftware.com/clear/
+[intro video]: http://vimeo.com/35693267
 [michael@massivehealth.com]: mailto:michael@massivehealth.com
 [github]: http://www.github.com/MassiveHealth/Opaque
 [Jobs page]: http://massivehealth.com/jobs-front-end
+[@yipe]: http://twitter.com/yipe
