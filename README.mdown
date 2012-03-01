@@ -61,8 +61,6 @@ Read the source for a full understanding of how it works—this read me talks ab
 
 Please send thoughts, feedback, improvements, ideas, haikus, hatemail, and suggestions to [michael@massivehealth.com][] and you can find me on Twitter at [@yipe][]. [Massive Health][] is not affiliated in any way with Realmac Software. We hope you take some of these ideas and build innovative new products with it!
 
-A bit about the author: Michael recently ran a leading mobile agency producing award-winning iOS apps and mobile strategy for Fortune 500 brands. He also built AppleTV’s cinematic user experience, shipped beautiful apps for Apple’s Mac OS team for 6 years, and traveled Southeast Asia for a year with two cameras and a large unkempt beard. He’s excited to be back building products that matter.
-
 [Jobs page]: http://massivehealth.com/jobs
 [Massive Health]: http://www.massivehealth.com
 [Realmac Software]: http://www.realmacsoftware.com/
